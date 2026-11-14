@@ -1,0 +1,121 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* Paleta Semovi */
+  --color-semovi-green: #0b4d3c;
+  --color-semovi-green-dark: #073326;
+  --color-semovi-green-light: #1f7a5c;
+  --color-asphalt: #2b2f33;
+  --color-asphalt-dark: #1c1f22;
+  --color-asphalt-line: #9ca3af;
+  --color-signal-white: #f8fafc;
+}
+
+:root {
+  --radius: 0.75rem;
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.21 0.006 285.885);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.765 0.177 163.223);
+  --primary-foreground: oklch(0.262 0.051 172.552);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.696 0.17 162.48);
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-zinc-950 text-foreground antialiased;
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "cv11", "ss01";
+  }
+}
+
+/* Radar de vía: grid radial sutil + viñeta */
+.radar-grid {
+  background-color: #09090b;
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.12), transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 100% 100%, 22px 22px;
+}
+
+.asphalt {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.55), rgba(255, 255, 255, 0.015) 50%, rgba(0, 0, 0, 0.55)),
+    repeating-radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 3px),
+    #111114;
+}
+
+/* Líneas de carril punteadas que "fluyen" hacia abajo (los autos avanzan hacia arriba) */
+.lane-divider {
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.28) 0 18px, transparent 18px 42px);
+  background-size: 100% 42px;
+  animation: lane-flow 0.9s linear infinite;
+}
+
+[data-paused="true"] .lane-divider {
+  animation-play-state: paused;
+}
+
+@keyframes lane-flow {
+  from { background-position-y: 0; }
+  to { background-position-y: 42px; }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.pulse-ring {
+  animation: pulse-ring 1.6s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
